@@ -8,12 +8,14 @@
     <title>SignIn</title>
 </head>
 <body>
+<div th:replace="fragments/nav :: nav"></div>
+
 <h1>We are in SignIn Page</h1>
 String username,
 String password,
 String firstName,
 String lastName,
-String dateOfBirth,
+Date dateOfBirth,
 String bio,
 String email
 
@@ -22,7 +24,7 @@ String email
     <input type="text" name="password">
     <input type="text" name="firstName">
     <input type="text" name="lastName">
-    <input type="text" name="dateOfBirth">
+    <input type="date" name="dateOfBirth">
     <input type="text" name="bio">
     <input type="text" name="email">
     <input type="submit">

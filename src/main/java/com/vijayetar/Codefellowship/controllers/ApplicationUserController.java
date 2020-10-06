@@ -3,12 +3,15 @@ package com.vijayetar.Codefellowship.controllers;
 import com.vijayetar.Codefellowship.models.user.ApplicationUser;
 import com.vijayetar.Codefellowship.models.user.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.sql.Date;
 
 @Controller
 public class ApplicationUserController {
@@ -24,7 +27,7 @@ public class ApplicationUserController {
             String password,
             String firstName,
             String lastName,
-            String dateOfBirth,
+            Date dateOfBirth,
             String bio,
             String email
     ){

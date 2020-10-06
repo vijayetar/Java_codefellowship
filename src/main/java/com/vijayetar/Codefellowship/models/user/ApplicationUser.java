@@ -17,7 +17,7 @@ public class ApplicationUser implements UserDetails {
     String password;
     String firstName;
     String lastName;
-    String dateOfBirth;
+    Date dateOfBirth;
     String bio;
     String email;
 
@@ -32,7 +32,7 @@ public class ApplicationUser implements UserDetails {
             String password,
             String firstName,
             String lastName,
-            String dateOfBirth,
+            Date dateOfBirth,
             String bio,
             String email
     ){
