@@ -3,6 +3,7 @@ package com.vijayetar.Codefellowship.controllers;
 import com.vijayetar.Codefellowship.models.user.ApplicationUser;
 import com.vijayetar.Codefellowship.models.user.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class ApplicationUserController {
                 dateOfBirth,
                 bio,
                 email);
+
         applicationUserRepository.save(newUser);
 
         return new RedirectView("/cool"); // consider changing this to the next page
@@ -44,10 +46,13 @@ public class ApplicationUserController {
 
     @GetMapping("/login")
     public String login(){
+        System.out.println("this is the login in part");
         return "login";
     }
+
     @GetMapping("/newUser")
-    public String signIn(){
+    public String newUser(){
+        System.out.println("this is the signing in part...");
         return "signIn";
     }
 }

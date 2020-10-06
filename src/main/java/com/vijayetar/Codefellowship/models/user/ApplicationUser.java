@@ -3,10 +3,7 @@ package com.vijayetar.Codefellowship.models.user;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 
@@ -14,7 +11,7 @@ import java.util.Collection;
 public class ApplicationUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    public long id;
     //An ApplicationUser should have a username, password (will be hashed using BCrypt), firstName, lastName, dateOfBirth, bio, and any other fields you think are useful.
     String username;
     String password;
@@ -23,6 +20,11 @@ public class ApplicationUser implements UserDetails {
     String dateOfBirth;
     String bio;
     String email;
+
+//// this is to connect the posts to each user
+//    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
+//    public List<BlogPost> blogPosts = new ArrayList<BlogPost>();
+
 
     public ApplicationUser(){};
     public ApplicationUser(
@@ -77,6 +79,5 @@ public class ApplicationUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 }

@@ -33,14 +33,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() //cross site resource forgery
                 .authorizeRequests()//all sites until AND are connected
                 .antMatchers("/").permitAll()
-                .antMatchers("/newUser", "/login").permitAll()
+                .antMatchers("/newUser", "/signIn", "/login").permitAll()
                 .anyRequest().authenticated() //forces login
                 .and()
                 .formLogin()//settings about Login
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/cool")
                 .and()
                 .logout();
+//              .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID"); // this creates a get route of /logout
     }
 
 }
