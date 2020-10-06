@@ -44,4 +44,8 @@ public class ApplicationUserController {
     public String login(){
         return "login";
     }
+    @GetMapping("/newUser")
+    public String signIn(){
+        return "signIn";
+    }
 }
