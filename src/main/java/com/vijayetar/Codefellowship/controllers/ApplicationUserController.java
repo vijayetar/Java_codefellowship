@@ -27,8 +27,10 @@ public class ApplicationUserController {
             String bio,
             String email
     ){
+        System.out.println("this is from the post mapping of the signing" + username + password);
         password = passwordEncoder.encode(password);
-        ApplicationUser newUser = new ApplicationUser(username,
+        ApplicationUser newUser = new ApplicationUser(
+                username,
                 password,
                 firstName,
                 lastName,
@@ -37,7 +39,7 @@ public class ApplicationUserController {
                 email);
         applicationUserRepository.save(newUser);
 
-        return new RedirectView("/"); // consider changing this to the next page
+        return new RedirectView("/cool"); // consider changing this to the next page
     }
 
     @GetMapping("/login")
