@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.persistence.OneToMany;
 import java.security.Principal;
 import java.sql.Date;
 
@@ -95,7 +96,7 @@ public class ApplicationUserController {
 
     @GetMapping("/username")
     @ResponseBody
-    public String currentUserNameSimple() {
+    public String currentUserNameSimple() { // https://www.baeldung.com/get-user-in-spring-security
         Authentication authentication = authenticationFacade.getAuthentication();
         return authentication.getName();
     }

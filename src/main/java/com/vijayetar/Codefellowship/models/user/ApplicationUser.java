@@ -1,12 +1,15 @@
 package com.vijayetar.Codefellowship.models.user;
 
+import com.vijayetar.Codefellowship.models.posts.Post;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -23,8 +26,8 @@ public class ApplicationUser implements UserDetails {
     public String email;
 
 //// this is to connect the posts to each user
-//    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
-//    public List<BlogPost> blogPosts = new ArrayList<BlogPost>();
+    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
+    public List<Post> blogPosts = new ArrayList<Post>();
 
 
     public ApplicationUser(){};

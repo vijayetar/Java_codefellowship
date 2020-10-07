@@ -12,9 +12,7 @@ import java.io.IOException;
 
 public class CustomLogoutSuccessHandler extends
         SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
-//
-//    @Autowired
-//    private AuditService auditService;
+
 
     @Override
     public void onLogoutSuccess(
@@ -22,9 +20,6 @@ public class CustomLogoutSuccessHandler extends
             HttpServletResponse response,
             Authentication authentication)
             throws IOException, ServletException {
-
-//        String refererUrl = request.getHeader("Referer");
-//        auditService.track("Logout from: " + refererUrl);
 
         super.onLogoutSuccess(request, response, authentication);
     }
