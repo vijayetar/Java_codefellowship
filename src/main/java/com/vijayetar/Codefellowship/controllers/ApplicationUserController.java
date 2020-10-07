@@ -1,13 +1,18 @@
 package com.vijayetar.Codefellowship.controllers;
 
+import com.vijayetar.Codefellowship.configs.CustomLogoutSuccessHandler;
 import com.vijayetar.Codefellowship.models.user.ApplicationUser;
 import com.vijayetar.Codefellowship.models.user.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -47,6 +52,22 @@ public class ApplicationUserController {
         return new RedirectView("/cool"); // consider changing this to the next page
     }
 
+    @GetMapping("/user/{id}")
+    public String showUserDetailsPage(@PathVariable Long id, Model m){
+        ApplicationUser user = applicationUserRepository.getOne(id);
+        String username = user.getUsername();
+        ApplicationUser newUser = applicationUserRepository.findByUsername(username);
+        m.addAttribute("user", user);
+        System.out.println("what are the contents of the user???     " + user.username + newUser.firstName);
+        if(user == null) {
+//            throw new Exception("User not found");
+//             add to the userdetail page, "this user does not exist"
+            m.addAttribute("userDoesNotExist", true);
+        }
+        return "userdetail";
+    }
+
+
     @GetMapping("/login")
     public String login(){
         System.out.println("this is the login in part");
@@ -58,4 +79,9 @@ public class ApplicationUserController {
         System.out.println("this is the signing in part...");
         return "signIn";
     }
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
+    }
+
 }

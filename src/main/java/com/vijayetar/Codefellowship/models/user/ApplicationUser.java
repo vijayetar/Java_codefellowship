@@ -13,13 +13,13 @@ public class ApplicationUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
     //An ApplicationUser should have a username, password (will be hashed using BCrypt), firstName, lastName, dateOfBirth, bio, and any other fields you think are useful.
-    String username;
-    String password;
-    String firstName;
-    String lastName;
-    Date dateOfBirth;
-    String bio;
-    String email;
+    public String username;
+    public String password;
+    public String firstName;
+    public String lastName;
+    public Date dateOfBirth;
+    public String bio;
+    public String email;
 
 //// this is to connect the posts to each user
 //    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)

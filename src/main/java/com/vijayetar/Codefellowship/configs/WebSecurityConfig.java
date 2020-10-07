@@ -40,9 +40,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/cool")
                 .and()
-                .logout();
-//              .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID"); // this creates a get route of /logout
+                .logout()
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID"); // this creates a get route of /logout
     }
 
 }
