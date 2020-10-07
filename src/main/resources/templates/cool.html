@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,6 +9,9 @@
 </head>
 <body>
 <div th:replace="fragments/nav :: nav"></div>
+<header th:replace="fragments/header :: header"></header>
+
 <h1> This is cool!! </h1>
+
 </body>
 </html>

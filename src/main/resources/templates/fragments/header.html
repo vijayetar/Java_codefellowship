@@ -1,0 +1,5 @@
+<header>
+    CodeFellowship
+    <h1 th:if="${currentuser}" th:text="'Hi there, '+ ${currentuser} +' !!!!'"></h1>
+    <h1 th:unless="${currentuser}" th:text="'Welcome to our site !!!!'"></h1>
+</header>

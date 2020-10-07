@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,10 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User Detail Page</title>
 </head>
+
 <div th:replace="fragments/nav :: nav"></div>
+<header th:replace="fragments/header :: header"></header>
 
 <img>
 <h1 th:if="${user}" th:text="${user.username}"></h1>
+<h1 th:if="${userDoesNotExist}" th:text="User Does Not Exist"> </h1>
 <p th:if="${user}" th:text = "${user.firstName}"></p>
 <p th:if="${user}" th:text = "${user.lastName}"></p>
 <p th:if="${user}" th:text = "${user.bio}"></p>
