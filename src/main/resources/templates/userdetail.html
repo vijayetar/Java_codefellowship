@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User Detail Page</title>
 </head>
+<div th:replace="fragments/nav :: nav"></div>
+
 <img>
 <h1 th:if="${user}" th:text="${user.username}"></h1>
 <p th:if="${user}" th:text = "${user.firstName}"></p>
