@@ -58,24 +58,32 @@ public class ApplicationUserController {
 
         applicationUserRepository.save(newUser);
 
-        return new RedirectView("/cool"); // consider changing this to the next page
+        return new RedirectView("/myprofile"); // consider changing this to the next page
     }
 
     @GetMapping("/user/{id}")
     public String showUserDetailsPage(@PathVariable Long id, Model m, Principal principal){
-        ApplicationUser user = applicationUserRepository.getOne(id);
-        String username = user.getUsername();
-        ApplicationUser newUser = applicationUserRepository.findByUsername(username);
+        ApplicationUser user = applicationUserRepository.findById(id).get();
+        System.out.println("here from the get route "+user.posts.get(0));
         m.addAttribute("user", user);
         m.addAttribute("currentuser", principal.getName());
-        System.out.println("what are the contents of the user???     " + user.username + newUser.firstName);
+//        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(principal.getName());
+//        m.addAttribute("currentUserId", loggedInUser.id );
         if(user == null) {
-//            throw new Exception("User not found");
-//             add to the userdetail page, "this user does not exist"
             m.addAttribute("userDoesNotExist", true);
         }
         return "userdetail";
     }
+
+    @GetMapping("/myprofile")
+    public String showProfilePage(Model m, Principal principal){
+        ApplicationUser loggedUser = applicationUserRepository.findByUsername(principal.getName());
+        System.out.println("this is the logged User" + loggedUser);
+        m.addAttribute("user", loggedUser);
+        m.addAttribute("currentuser", principal.getName());
+        return "myprofile";
+    }
+
 
 
     @GetMapping("/login")
