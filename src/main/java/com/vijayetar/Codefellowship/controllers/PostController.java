@@ -27,6 +27,7 @@ public class PostController {
         appUser.posts.add(post);
         applicationUserRepository.save(appUser);
         System.out.println("here are the posts  "+ appUser.posts);
-        return new RedirectView("/user/"+appUser.getId());
+        return new RedirectView("/myprofile");
+//        return new RedirectView("/user/"+appUser.getId());
     }
 }

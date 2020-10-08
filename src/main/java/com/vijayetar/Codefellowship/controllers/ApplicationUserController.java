@@ -58,7 +58,7 @@ public class ApplicationUserController {
 
         applicationUserRepository.save(newUser);
 
-        return new RedirectView("/cool"); // consider changing this to the next page
+        return new RedirectView("/myprofile"); // consider changing this to the next page
     }
 
     @GetMapping("/user/{id}")
@@ -74,6 +74,16 @@ public class ApplicationUserController {
         }
         return "userdetail";
     }
+
+    @GetMapping("/myprofile")
+    public String showProfilePage(Model m, Principal principal){
+        ApplicationUser loggedUser = applicationUserRepository.findByUsername(principal.getName());
+        System.out.println("this is the logged User" + loggedUser);
+        m.addAttribute("user", loggedUser);
+        m.addAttribute("currentuser", principal.getName());
+        return "myprofile";
+    }
+
 
 
     @GetMapping("/login")
