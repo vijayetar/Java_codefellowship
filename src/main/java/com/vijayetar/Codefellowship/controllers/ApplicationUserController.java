@@ -63,15 +63,13 @@ public class ApplicationUserController {
 
     @GetMapping("/user/{id}")
     public String showUserDetailsPage(@PathVariable Long id, Model m, Principal principal){
-        ApplicationUser user = applicationUserRepository.getOne(id);
-        String username = user.getUsername();
-        ApplicationUser newUser = applicationUserRepository.findByUsername(username);
+        ApplicationUser user = applicationUserRepository.findById(id).get();
+        System.out.println("here from the get route "+user.posts.get(0));
         m.addAttribute("user", user);
         m.addAttribute("currentuser", principal.getName());
-        System.out.println("what are the contents of the user???     " + user.username + newUser.firstName);
+//        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(principal.getName());
+//        m.addAttribute("currentUserId", loggedInUser.id );
         if(user == null) {
-//            throw new Exception("User not found");
-//             add to the userdetail page, "this user does not exist"
             m.addAttribute("userDoesNotExist", true);
         }
         return "userdetail";

@@ -27,7 +27,7 @@ public class ApplicationUser implements UserDetails {
 
 //// this is to connect the posts to each user
     @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
-    public List<Post> blogPosts = new ArrayList<Post>();
+    public List<Post> posts = new ArrayList<Post>();
 
 
     public ApplicationUser(){};

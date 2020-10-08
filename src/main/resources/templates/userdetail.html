@@ -11,13 +11,24 @@
 <div th:replace="fragments/nav :: nav"></div>
 <header th:replace="fragments/header :: header"></header>
 
-<img>
+<img src = "https://unsplash.com/photos/TZyEMoSB9Tw" alt="Gnome"/>
 <h1 th:if="${user}" th:text="${user.username}"></h1>
 <h1 th:if="${userDoesNotExist}" th:text="User Does Not Exist"> </h1>
 <p th:if="${user}" th:text = "${user.firstName}"></p>
 <p th:if="${user}" th:text = "${user.lastName}"></p>
 <p th:if="${user}" th:text = "${user.bio}"></p>
 <p th:if="${user}" th:text = "${user.email}"></p>
+
+<form action="/savePost" method="POST">
+    Body: <input type="text" name="body">
+    <input type="number" name="id" th:value="${user.id}">
+    <input type="submit">
+</form>
+<section th:each="posting:${user.posts}" >
+    <p th:text="${posting.getBody()}"></p>
+    <p th:text="${posting.getCreatedAt()}"></p>
+
+</section>
 
 </body>
 </html>

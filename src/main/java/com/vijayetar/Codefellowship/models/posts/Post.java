@@ -13,16 +13,31 @@ public class Post {
     long id;
 
     @ManyToOne
+    public
     ApplicationUser applicationUser;
 
 
     String body;
     Date createdAt;
 
-    public Post(){};
-    public Post(ApplicationUser applicationUser, String body){
+    public Post() {
+    }
+
+    public Post(String body) {
         this.body = body;
         this.createdAt = new Date(Calendar.getInstance().getTime().getTime());
 
+    }
+    public Post(ApplicationUser applicationUser, String body){
+        this.body = body;
+        this.createdAt = new Date(Calendar.getInstance().getTime().getTime());
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 }
