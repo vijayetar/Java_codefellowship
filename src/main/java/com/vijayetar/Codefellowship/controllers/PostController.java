@@ -19,7 +19,7 @@ public class PostController {
     @Autowired
     PostRepository postRepository;
     @PostMapping("/savePost")
-    public RedirectView makeNewPost(String body, long id, Principal principal, Model m){
+    public RedirectView makeNewPost(String body, long id, Principal principal){
         Post post = new Post(body);
         ApplicationUser appUser = applicationUserRepository.getOne(id);
         post.applicationUser = appUser;
@@ -28,6 +28,5 @@ public class PostController {
         applicationUserRepository.save(appUser);
         System.out.println("here are the posts  "+ appUser.posts);
         return new RedirectView("/myprofile");
-//        return new RedirectView("/user/"+appUser.getId());
     }
 }
