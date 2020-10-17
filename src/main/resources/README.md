@@ -9,11 +9,19 @@ This is a Spring app that allows multiple codefellow users to view blog posts by
 ```
 cd Java_codefellowship
 ``` 
-3. And then type the command to build the app and run it
+3. Check the application.properties and alter the name of the database and password to local server.  If database does not exist then create datebase in the psql.
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/codefellowship
+spring.datasource.username=vijayetar
+spring.datasource.password=password
+#spring.jpa.hibernate.ddl-auto=create
+spring.jpa.hibernate.ddl-auto=update
+```
+4. And then type the command to build the app and run it
 ```
  ./gradlew bootRun
  ```
- 4. Open the web app on localhost:8080n on your browser
+5. Open the web app on localhost:8080 on your browser
 
  ## Routes 
  1. Home routes "/", "/login" for returning user and "/newUser" for registration 

@@ -11,7 +11,7 @@
 <div th:replace="fragments/nav :: nav"></div>
 <header th:replace="fragments/header :: header"></header>
 
-<img src="https://unsplash.com/photos/TZyEMoSB9Tw" alt="Gnome"/>
+<img src="/images/gnome.jpg" alt="Gnome" th:width="200px"/>
 <h1 th:if="${user}" th:text="${user.username}"></h1>
 <h1 th:if="${userDoesNotExist}" th:text="User Does Not Exist"> </h1>
 <p th:if="${user}" th:text = "${user.firstName}"></p>
@@ -21,7 +21,7 @@
 
 <form action="/savePost" method="POST">
     Body: <input type="text" name="body">
-    <input type="number" name="id" th:value="${user.id}">
+    <input type="hidden" name="id" th:value="${user.id}">
     <input type="submit">
 </form>
 <section th:each="posting:${user.posts}" >
