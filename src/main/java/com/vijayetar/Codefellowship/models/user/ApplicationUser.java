@@ -16,7 +16,6 @@ public class ApplicationUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
-    //An ApplicationUser should have a username, password (will be hashed using BCrypt), firstName, lastName, dateOfBirth, bio, and any other fields you think are useful.
     public String username;
     public String password;
     public String firstName;

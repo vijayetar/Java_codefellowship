@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.OneToMany;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.sql.Date;
 
@@ -43,20 +45,19 @@ public class ApplicationUserController {
             String lastName,
             Date dateOfBirth,
             String bio,
-            String email
+            String email,
+            HttpServletRequest request
     ){
-        System.out.println("this is from the post mapping of the signing" + username + password);
-        password = passwordEncoder.encode(password);
-        ApplicationUser newUser = new ApplicationUser(
-                username,
-                password,
-                firstName,
-                lastName,
-                dateOfBirth,
-                bio,
-                email);
-
+        System.out.println("this is from the post mapping of the signing   " + username + "  " + password);
+        String hashedPassword = passwordEncoder.encode(password);
+        ApplicationUser newUser = new ApplicationUser(username, hashedPassword, firstName, lastName, dateOfBirth, bio, email);
         applicationUserRepository.save(newUser);
+        try {
+            request.login(username,password);
+        } catch (ServletException e) {
+            System.out.println("login failed");
+            e.printStackTrace();
+        }
 
         return new RedirectView("/myprofile"); // consider changing this to the next page
     }
@@ -83,8 +84,6 @@ public class ApplicationUserController {
         m.addAttribute("currentuser", principal.getName());
         return "myprofile";
     }
-
-
 
     @GetMapping("/login")
     public String login(){
