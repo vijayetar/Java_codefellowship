@@ -11,11 +11,15 @@
 <div th:replace="fragments/navwithsigninonly :: nav"></div>
 <h1>Home Page </h1>
 <!--Have all the posts show up here on the home html page with the name of users and button to follow them -->
-<!--<section th:each="posting:${user.posts}" >-->
-<!--    <p th:text="${posting.getBody()}"></p>-->
-<!--    <p th:text="${posting.getCreatedAt()}"></p>-->
-<!--    <h3 th:text=""></h3>-->
+<div th:if="${allUsers}">
+<section th:each="eachUser:${allUsers}" >
 
-<!--</section>-->
+    <a th:href="'/user/' + ${eachUser.getId()}"><h3 th:text="'By: ' + ${eachUser.getUsername()}"></h3></a>
+    <div th:each="posting:${eachUser.getPosts()}">
+    <p th:text="${posting.getBody()}?:'No text'"></p>
+    <p th:if="${posting}" th:text="${posting.getCreatedAt()}"></p>
+    </div>
+</section>
+</div>
 </body>
 </html>

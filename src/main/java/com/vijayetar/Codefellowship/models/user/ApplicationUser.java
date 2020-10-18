@@ -52,6 +52,8 @@ public class ApplicationUser implements UserDetails {
         return id;
     }
 
+
+
     public String getFirstName() {
         return firstName;
     }
@@ -70,6 +72,10 @@ public class ApplicationUser implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
     }
 
     @Override
