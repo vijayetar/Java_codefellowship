@@ -13,7 +13,6 @@
 <!--Have all the posts show up here on the home html page with the name of users and button to follow them -->
 <div th:if="${allUsers}">
 <section th:each="eachUser:${allUsers}" >
-
     <a th:href="'/user/' + ${eachUser.getId()}"><h3 th:text="'By: ' + ${eachUser.getUsername()}"></h3></a>
     <div th:each="posting:${eachUser.getPosts()}">
     <p th:text="${posting.getBody()}?:'No text'"></p>

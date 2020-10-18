@@ -65,10 +65,15 @@ public class ApplicationUserController {
     @GetMapping("/user/{id}")
     public String showUserDetailsPage(@PathVariable Long id, Model m, Principal principal){
         ApplicationUser user = applicationUserRepository.findById(id).get();
+        ApplicationUser thisUser= applicationUserRepository.findByUsername(principal.getName());
         m.addAttribute("user", user);
         m.addAttribute("currentuser", principal.getName());
         if(user == null) {
             m.addAttribute("userDoesNotExist", true);
+        }
+        if (user.getId() == thisUser.getId()){
+            System.out.println("the both ids are the same");
+            return "myprofile";
         }
         return "userdetail";
     }

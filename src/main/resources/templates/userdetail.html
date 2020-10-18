@@ -11,6 +11,7 @@
 <div th:replace="fragments/nav :: nav"></div>
 <header th:replace="fragments/header :: header"></header>
 
+<!--user details-->
 <img src="/images/gnome.jpg" alt="Gnome" th:width="200px"/>
 <h1 th:if="${user}" th:text="${user.username}"></h1>
 <h1 th:if="${userDoesNotExist}" th:text="User Does Not Exist"> </h1>
@@ -19,11 +20,20 @@
 <p th:if="${user}" th:text = "${user.bio}"></p>
 <p th:if="${user}" th:text = "${user.email}"></p>
 
+<!--view all postings by this user-->
 <section th:each="posting:${user.posts}" >
     <p th:text="${posting.getBody()}"></p>
     <p th:text="${posting.getCreatedAt()}"></p>
 
 </section>
+
+<!--here they can follow the user different from the signed in user-->
+<form action="/followUser" method="POST">
+    <section th:if="${user.username != currentuser}">
+    <input type="hidden" value="${user.username}" name="username">
+    <input type="submit" value="Follow" name="follow">
+    </section>
+</form>
 
 </body>
 </html>
