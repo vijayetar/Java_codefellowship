@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Detail Page</title>
+</head>
+
+<div th:replace="fragments/nav :: nav"></div>
+<header th:replace="fragments/header :: header"></header>
+<h1>These are the blog posts from your favorite users!</h1>
+<div th:if="${allUsersIFollow}">
+    <section th:each="eachUser:${allUsersIFollow}" >
+        <a th:href="'/user/' + ${eachUser.getId()}">
+            <h3 th:text="'By: ' + ${eachUser.getUsername()}"></h3>
+        </a>
+        <div th:each="posting:${eachUser.getPosts()}">
+            <p th:text="${posting.getBody()}?:'No text'"></p>
+            <p th:if="${posting}" th:text="${posting.getCreatedAt()}"></p>
+        </div>
+    </section>
+</div>

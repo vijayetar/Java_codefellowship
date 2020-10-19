@@ -10,6 +10,7 @@
 <body>
 <div th:replace="fragments/nav :: nav"></div>
 <h1>Home Page </h1>
+<p> Pleae review the posts from all our users. If you would like to join this app, then click signup.  If you are a returning member, then login and then review your profile to add posts.  You can also click on different users and then follown them.  You can also review all the posts by users that you follow</p>
 <!--Have all the posts show up here on the home html page with the name of users and button to follow them -->
 <div th:if="${allUsers}">
 <section th:each="eachUser:${allUsers}" >
