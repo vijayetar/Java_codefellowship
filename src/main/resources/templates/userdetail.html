@@ -30,10 +30,9 @@
 <!--here they can follow the user different from the signed in user-->
     <section th:if="${user.username != currentuser}">
         <div th:if="${iDoNotFollowThisUser}">
-            <p th:text="'I Follow this User'"></p>
             <form action="/unfollow" method="POST">
                 <input type="hidden" th:value="${user.username}" name="username">
-                <input type="submit" value="UnFollow">
+                <input type="submit" value="Un Follow">
             </form>
         </div>
         <div th:unless="${iDoNotFollowThisUser}">

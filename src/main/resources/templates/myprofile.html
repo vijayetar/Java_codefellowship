@@ -21,6 +21,13 @@
 <p th:if="${user}" th:text = "${user.bio}"></p>
 <p th:if="${user}" th:text = "${user.email}"></p>
 
+<section th:if="${usersIfollow}">
+    <h3>Users I follow: </h3>
+    <article th:each="eachUser:${usersIfollow}">
+        <a th:href="'/user/' + ${eachUser.getId()}"><h4 th:text="${eachUser.username}"></h4></a>
+    </article>
+</section>
+
 <form action="/savePost" method="POST">
     Body: <input type="text" name="body">
     <input type="hidden" name="id" th:value="${user.id}">
@@ -29,7 +36,6 @@
 <section th:each="posting:${user.posts}" >
     <p th:text="${posting.getBody()}"></p>
     <p th:text="${posting.getCreatedAt()}"></p>
-
 </section>
 
 </body>

@@ -89,6 +89,7 @@ public class ApplicationUserController {
         System.out.println("this is the logged User" + loggedUser);
         m.addAttribute("user", loggedUser);
         m.addAttribute("currentuser", principal.getName());
+        m.addAttribute("usersIfollow", loggedUser.usersIFollow);
         return "myprofile";
     }
 
