@@ -28,3 +28,6 @@ spring.jpa.hibernate.ddl-auto=update
  2. When a user logs in or newUser registers, they are directed to the "/myprofile" page
  3. Once logged in, user can access profile and posts of other using "/user/{id}"
  4. User can logout any time.
+ 
+ ### References
+ 1. [Heroku Deployment](https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku)
