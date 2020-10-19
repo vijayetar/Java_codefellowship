@@ -68,6 +68,11 @@ public class ApplicationUserController {
         ApplicationUser thisUser= applicationUserRepository.findByUsername(principal.getName());
         m.addAttribute("user", user);
         m.addAttribute("currentuser", principal.getName());
+        if (!thisUser.usersIFollow.contains(user)){
+            m.addAttribute("iDoNotFollowThisUser",false);
+        } else{
+            m.addAttribute("iDoNotFollowThisUser", true);
+        }
         if(user == null) {
             m.addAttribute("userDoesNotExist", true);
         }
@@ -109,19 +114,27 @@ public class ApplicationUserController {
         Authentication authentication = authenticationFacade.getAuthentication();
         return authentication.getName();
     }
+//    adds username to the current users hashset of users they follow
     @PostMapping("/followUser")
     public RedirectView followUser(String username, Principal principal){
-        System.out.println("this is the username "+username);
         ApplicationUser thisUser = applicationUserRepository.findByUsername(principal.getName());
-        System.out.println("this User  "+ thisUser.getUsername());
         ApplicationUser followingUser = applicationUserRepository.findByUsername(username);
-        System.out.println("following User "+ followingUser.getUsername());
         thisUser.usersIFollow.add(followingUser);
         followingUser.usersWhoFollowMe.add(thisUser);
         applicationUserRepository.save(thisUser);
         applicationUserRepository.save(followingUser);
         return new RedirectView("/");
 
+    }
+//    removes the user so that they are no longer following them
+    @PostMapping("/unfollow")
+    public RedirectView unfollowUser(String username, Principal principal){
+        ApplicationUser thisUser = applicationUserRepository.findByUsername(principal.getName());
+        ApplicationUser followingUser = applicationUserRepository.findByUsername(username);
+        thisUser.usersIFollow.remove(followingUser);
+        applicationUserRepository.save(thisUser);
+        applicationUserRepository.save(followingUser);
+        return new RedirectView("/");
     }
 
 }
