@@ -5,13 +5,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
     <title>User Detail Page</title>
 </head>
 
 <div th:replace="fragments/nav :: nav"></div>
+<br>
+<br>
+<br>
+<br>
 <header th:replace="fragments/header :: header"></header>
 
-<img src = "https://unsplash.com/photos/TZyEMoSB9Tw" alt="Gnome"/>
+<!--user details-->
+<img src="/images/gnome.jpg" alt="Gnome" th:width="200px"/>
 <h1 th:if="${user}" th:text="${user.username}"></h1>
 <h1 th:if="${userDoesNotExist}" th:text="User Does Not Exist"> </h1>
 <p th:if="${user}" th:text = "${user.firstName}"></p>
@@ -19,11 +28,28 @@
 <p th:if="${user}" th:text = "${user.bio}"></p>
 <p th:if="${user}" th:text = "${user.email}"></p>
 
+<!--view all postings by this user-->
 <section th:each="posting:${user.posts}" >
     <p th:text="${posting.getBody()}"></p>
     <p th:text="${posting.getCreatedAt()}"></p>
 
 </section>
+
+<!--here they can follow the user different from the signed in user-->
+    <section th:if="${user.username != currentuser}">
+        <div th:if="${iDoNotFollowThisUser}">
+            <form action="/unfollow" method="POST">
+                <input type="hidden" th:value="${user.username}" name="username">
+                <input type="submit" value="Un Follow">
+            </form>
+        </div>
+        <div th:unless="${iDoNotFollowThisUser}">
+            <form action="/followUser" method="POST">
+            <input type="hidden" th:value="${user.username}" name="username">
+            <input type="submit" value="Follow">
+            </form>
+        </div>
+    </section>
 
 </body>
 </html>

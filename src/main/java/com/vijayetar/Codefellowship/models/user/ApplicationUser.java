@@ -7,16 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class ApplicationUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
-    //An ApplicationUser should have a username, password (will be hashed using BCrypt), firstName, lastName, dateOfBirth, bio, and any other fields you think are useful.
     public String username;
     public String password;
     public String firstName;
@@ -24,11 +21,6 @@ public class ApplicationUser implements UserDetails {
     public Date dateOfBirth;
     public String bio;
     public String email;
-
-//// this is to connect the posts to each user
-    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
-    public List<Post> posts = new ArrayList<Post>();
-
 
     public ApplicationUser(){};
     public ApplicationUser(
@@ -49,6 +41,26 @@ public class ApplicationUser implements UserDetails {
         this.email = email;
     }
 
+    // ------------this is to connect the posts to each user ------------
+    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
+    public List<Post> posts = new ArrayList<Post>();
+
+    // --------- this is to connect users to other user they can follow and be followed ---------------
+
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    // we want this not to delete the other user if one gets deleted
+    @JoinTable(
+            name="UsersFollowingEachOther",
+            joinColumns = { @JoinColumn(name="userFollowsWhom")},
+            inverseJoinColumns = {@JoinColumn(name="userFollowedByWhom")}
+    )
+
+    public Set<ApplicationUser> usersIFollow = new HashSet<>();
+    @ManyToMany(mappedBy = "usersIFollow")
+    public Set<ApplicationUser> usersWhoFollowMe = new HashSet<>();
+
+
+// -------------   getters and setters   --------------------
     public long getId() {
         return id;
     }
@@ -73,6 +85,10 @@ public class ApplicationUser implements UserDetails {
         return email;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+//----------------- setting authentication -------------------------
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

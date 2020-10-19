@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.OneToMany;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.sql.Date;
 
@@ -43,20 +45,19 @@ public class ApplicationUserController {
             String lastName,
             Date dateOfBirth,
             String bio,
-            String email
+            String email,
+            HttpServletRequest request
     ){
-        System.out.println("this is from the post mapping of the signing" + username + password);
-        password = passwordEncoder.encode(password);
-        ApplicationUser newUser = new ApplicationUser(
-                username,
-                password,
-                firstName,
-                lastName,
-                dateOfBirth,
-                bio,
-                email);
-
+        System.out.println("this is from the post mapping of the signing   " + username + "  " + password);
+        String hashedPassword = passwordEncoder.encode(password);
+        ApplicationUser newUser = new ApplicationUser(username, hashedPassword, firstName, lastName, dateOfBirth, bio, email);
         applicationUserRepository.save(newUser);
+        try {
+            request.login(username,password);
+        } catch (ServletException e) {
+            System.out.println("login failed");
+            e.printStackTrace();
+        }
 
         return new RedirectView("/myprofile"); // consider changing this to the next page
     }
@@ -64,13 +65,20 @@ public class ApplicationUserController {
     @GetMapping("/user/{id}")
     public String showUserDetailsPage(@PathVariable Long id, Model m, Principal principal){
         ApplicationUser user = applicationUserRepository.findById(id).get();
-        System.out.println("here from the get route "+user.posts.get(0));
+        ApplicationUser thisUser= applicationUserRepository.findByUsername(principal.getName());
         m.addAttribute("user", user);
         m.addAttribute("currentuser", principal.getName());
-//        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(principal.getName());
-//        m.addAttribute("currentUserId", loggedInUser.id );
+        if (!thisUser.usersIFollow.contains(user)){
+            m.addAttribute("iDoNotFollowThisUser",false);
+        } else{
+            m.addAttribute("iDoNotFollowThisUser", true);
+        }
         if(user == null) {
             m.addAttribute("userDoesNotExist", true);
+        }
+        if (user.getId() == thisUser.getId()){
+            System.out.println("the both ids are the same");
+            return "myprofile";
         }
         return "userdetail";
     }
@@ -81,10 +89,9 @@ public class ApplicationUserController {
         System.out.println("this is the logged User" + loggedUser);
         m.addAttribute("user", loggedUser);
         m.addAttribute("currentuser", principal.getName());
+        m.addAttribute("usersIfollow", loggedUser.usersIFollow);
         return "myprofile";
     }
-
-
 
     @GetMapping("/login")
     public String login(){
@@ -107,6 +114,28 @@ public class ApplicationUserController {
     public String currentUserNameSimple() { // https://www.baeldung.com/get-user-in-spring-security
         Authentication authentication = authenticationFacade.getAuthentication();
         return authentication.getName();
+    }
+//    adds username to the current users hashset of users they follow
+    @PostMapping("/followUser")
+    public RedirectView followUser(String username, Principal principal){
+        ApplicationUser thisUser = applicationUserRepository.findByUsername(principal.getName());
+        ApplicationUser followingUser = applicationUserRepository.findByUsername(username);
+        thisUser.usersIFollow.add(followingUser);
+        followingUser.usersWhoFollowMe.add(thisUser);
+        applicationUserRepository.save(thisUser);
+        applicationUserRepository.save(followingUser);
+        return new RedirectView("/");
+
+    }
+//    removes the user so that they are no longer following them
+    @PostMapping("/unfollow")
+    public RedirectView unfollowUser(String username, Principal principal){
+        ApplicationUser thisUser = applicationUserRepository.findByUsername(principal.getName());
+        ApplicationUser followingUser = applicationUserRepository.findByUsername(username);
+        thisUser.usersIFollow.remove(followingUser);
+        applicationUserRepository.save(thisUser);
+        applicationUserRepository.save(followingUser);
+        return new RedirectView("/");
     }
 
 }

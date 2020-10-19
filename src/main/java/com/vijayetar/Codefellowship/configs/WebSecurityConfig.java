@@ -1,6 +1,7 @@
 package com.vijayetar.Codefellowship.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -32,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable() //whitelist pages
                 .csrf().disable() //cross site resource forgery
                 .authorizeRequests()//all sites until AND are connected
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/newUser", "/signIn", "/login").permitAll()
                 .anyRequest().authenticated() //forces login
