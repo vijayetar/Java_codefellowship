@@ -109,5 +109,19 @@ public class ApplicationUserController {
         Authentication authentication = authenticationFacade.getAuthentication();
         return authentication.getName();
     }
+    @PostMapping("/followUser")
+    public RedirectView followUser(String username, Principal principal){
+        System.out.println("this is the username "+username);
+        ApplicationUser thisUser = applicationUserRepository.findByUsername(principal.getName());
+        System.out.println("this User  "+ thisUser.getUsername());
+        ApplicationUser followingUser = applicationUserRepository.findByUsername(username);
+        System.out.println("following User "+ followingUser.getUsername());
+        thisUser.usersIFollow.add(followingUser);
+        followingUser.usersWhoFollowMe.add(thisUser);
+        applicationUserRepository.save(thisUser);
+        applicationUserRepository.save(followingUser);
+        return new RedirectView("/");
+
+    }
 
 }

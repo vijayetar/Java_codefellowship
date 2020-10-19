@@ -30,8 +30,8 @@
 <!--here they can follow the user different from the signed in user-->
 <form action="/followUser" method="POST">
     <section th:if="${user.username != currentuser}">
-    <input type="hidden" value="${user.username}" name="username">
-    <input type="submit" value="Follow" name="follow">
+    <input type="hidden" th:value="${user.username}" name="username">
+    <input type="submit" value="Follow">
     </section>
 </form>
 
