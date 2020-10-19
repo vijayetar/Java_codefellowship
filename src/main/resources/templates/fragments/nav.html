@@ -1,8 +1,12 @@
-<nav th:fragment="nav">
-    <ul><a href="/"><li>home</li></a></ul>
-    <ul><li th:if="${currentuser}"><a href="/myprofile">My Profile</a></li></ul>
-    <ul><li th:if="${currentuser}"><a href="/feed">All Feeds</a></li></ul>
-    <ul><li th:if="${currentuser}"><a href="/logout">Logout</a></li></ul>
-    <ul><li th:unless="${currentuser}"><a href="/login">Login</a></li></ul>
-    <ul><li th:unless="${currentuser}"><a href="/newUser">Sign In</a></li></ul>
+<nav xmlns:th="http://www.w3.org/1999/xhtml" class="navbar fixed-top navbar-light bg-light" style="background-color: #e3f2fd;">
+    <br>
+    <br>
+    <ul><li class = "nav-brand text-decoration-none"><a href="/">home</a></li></ul>
+    <ul><li class = "nav-brand text-decoration-none" th:if="${currentuser}"><a href="/myprofile">My Profile</a></li></ul>
+    <ul><li class = "nav-brand text-decoration-none" th:if="${currentuser}"><a href="/feed">All Feeds</a></li></ul>
+    <ul><li class = "nav-brand text-decoration-none" th:if="${currentuser}"><a href="/logout">Logout</a></li></ul>
+    <ul><li class = "nav-brand text-decoration-none" th:unless="${currentuser}"><a href="/login">Login</a></li></ul>
+    <ul><li class = "nav-brand text-decoration-none" th:unless="${currentuser}"><a href="/newUser">Sign In</a></li></ul>
+    <br>
+    <br>
 </nav>
