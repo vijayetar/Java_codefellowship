@@ -19,9 +19,11 @@ public class HomeController {
     ApplicationUserRepository applicationUserRepository;
 
     @GetMapping("/")
-    public String showHome(Model m){
+    public String showHome(Model m, Principal principal){
+        if (principal != null) {
+            m.addAttribute("currentuser", principal.getName());
+        }
         List<ApplicationUser> allUsers = applicationUserRepository.findAll();
-        System.out.println("these are all Users"+allUsers.get(1));
         m.addAttribute("allUsers", allUsers);
         return "home";
     }

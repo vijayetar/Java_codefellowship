@@ -1,6 +1,8 @@
 <nav th:fragment="nav">
     <ul><a href="/"><li>home</li></a></ul>
-    <ul><a href="/login"><li>login</li></a></ul>
-    <ul><a href="/newUser"><li>Sign In</li></a></ul>
-    <ul><a href="/logout"><li>logout</li></a></ul>
+    <ul><li th:if="${currentuser}"><a href="/myprofile">My Profile</a></li></ul>
+    <ul><li th:if="${currentuser}"><a href="/feed">All Feeds</a></li></ul>
+    <ul><li th:if="${currentuser}"><a href="/logout">Logout</a></li></ul>
+    <ul><li th:unless="${currentuser}"><a href="/login">Login</a></li></ul>
+    <ul><li th:unless="${currentuser}"><a href="/newUser">Sign In</a></li></ul>
 </nav>

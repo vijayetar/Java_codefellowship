@@ -8,7 +8,7 @@
     <title>Home</title>
 </head>
 <body>
-<div th:replace="fragments/navwithsigninonly :: nav"></div>
+<div th:replace="fragments/nav :: nav"></div>
 <h1>Home Page </h1>
 <!--Have all the posts show up here on the home html page with the name of users and button to follow them -->
 <div th:if="${allUsers}">
